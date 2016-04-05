@@ -1,0 +1,45 @@
+version: '2'
+
+services:
+  app-db:
+    container_name: "db"
+    image: mvertes/alpine-mongo:3.2.4-1
+    ports:
+      - "27017:27017"
+    volumes:
+      - /var/mongo:/data/db
+    networks:
+      - parse-server
+
+  app-server:
+    container_name: "server"
+    build: server
+    ports:
+      - "1337:1337"
+    env_file: .env
+    volumes:
+      - ./server:/src
+    working_dir: /src
+    command: npm start
+    links:
+      - app-db
+    networks:
+      - parse-server
+
+  app-client:
+    container_name: "client"
+    image: mhart/alpine-node:4.4
+    ports:
+      - "8080:8080"
+    env_file: .env
+    volumes:
+      - ./client:/src
+    working_dir: /src
+    command: npm start
+    links:
+      - app-server
+    networks:
+      - parse-server
+
+networks:
+  parse-server:

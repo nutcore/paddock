@@ -1,0 +1,15 @@
+{
+  "name": "client",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "prestart": "npm set progress=false; if [ ! -d node_modules ]; then npm install; fi",
+    "start": "node ./node_modules/http-server/bin/http-server"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "http-server": "^0.9.0"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "server",
+  "version": "0.0.1",
+  "description": "",
+  "scripts": {
+    "start": "parse-server --appId APPLICATION_ID --masterKey MASTER_KEY --databaseURI mongodb://app-db:27017/parse"
+  },
+  "author": "",
+  "license": "MIT"
+}
