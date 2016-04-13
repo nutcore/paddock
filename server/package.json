@@ -3,8 +3,14 @@
   "version": "0.0.1",
   "description": "",
   "scripts": {
-    "start": "parse-server --appId APPLICATION_ID --masterKey MASTER_KEY --databaseURI mongodb://app-db:27017/parse"
+    "prestart": "npm set progress=false; if [ ! -d node_modules ]; then npm install; fi",
+    "start"   : "NODE_ENV=production node app.js",
+    "dev"     : "NODE_ENV=development node app.js"
   },
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^2.0.0",
+    "express": "^4.13.4"
+  }
 }

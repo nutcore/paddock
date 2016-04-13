@@ -4,84 +4,27 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Hello React!</title>
-    <!-- The core React library -->
-    <script src="https://fb.me/react-0.14.8.js"></script>
-    <!-- The ReactDOM Library -->
-    <script src="https://fb.me/react-dom-0.14.8.js"></script>
+    <title>Hello Parse!</title>
+  </head>
+  <body>
+    <div id="example"></div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+    <!-- The core React library -->
+    <script src="https://fb.me/react-15.0.1.js"></script>
+    <!-- The ReactDOM Library -->
+    <script src="https://fb.me/react-dom-15.0.1.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script>
     <script src="https://www.parsecdn.com/js/parse-latest.js"></script>
     <!-- also check https://github.com/ParsePlatform/ParseReact -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chance/1.0.1/chance.min.js"></script>
 
-    <script type="text/babel" src="src/helloworld.js"></script>
-  </head>
-  <body>
-    <div id="example"></div>
     <script type="text/babel">
       Parse.initialize("APPLICATION_ID", "YOUR_JAVASCRIPT_KEY");
       Parse.serverURL = '//192.168.99.100:1337/parse';
-
-      const GameScore = Parse.Object.extend("GameScore");
-
-      const ExampleApplication = React.createClass({
-        getInitialState() {
-            return {
-              'objects': []
-            }
-        },
-
-        render: function() {
-          return (
-            <div>
-              <h1>Hello, world!</h1>
-              <h2 style={{ 'cursor': 'pointer' }} onClick={() => {
-                const gameScore = new GameScore();
-
-                gameScore.set("score", chance.integer({min: 0, max: 9000}));
-                gameScore.set("playerName", chance.name());
-                gameScore.set("cheatMode", false);
-
-                gameScore.save(null, {
-                  success: function(gameScore) {
-                    // Execute any logic that should take place after the object is saved.
-                    console.info('New object created with objectId: ' + gameScore.id);
-
-                    this.setState({
-                      'objects': this.state.objects.concat(gameScore.toJSON())
-                    });
-                  }.bind(this),
-                  error: function(gameScore, error) {
-                    // Execute any logic that should take place if the save fails.
-                    // error is a Parse.Error with an error code and message.
-                    console.error('Failed to create new object, with error code: ' + error.message);
-                  }
-                });
-              }}> &raquo; fire something up </h2>
-
-              <ul>
-                {(this.state.objects).map((object) => {
-                  return (
-                    <li key={object.objectId}>
-                      <div>ID: {object.objectId}</div>
-                      <div>Name: {object.playerName}</div>
-                      <div>Score: {object.score}</div>
-                      <div>Created at: {object.createdAt}</div>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          )
-        }
-      });
-
-      ReactDOM.render(
-        <ExampleApplication />,
-        document.getElementById('example')
-      );
     </script>
+
+    <script type="text/babel" src="../src/HelloParse.js"></script>
   </body>
 </html>
