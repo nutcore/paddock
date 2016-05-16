@@ -4,9 +4,14 @@ var express     = require('express');
 // Required globally for now, hitting Docker's image cache
 var ParseServer = require('/usr/local/lib/node_modules/parse-server').ParseServer;
 
+var oauthshim = require('oauth-shim');
+
+// Check docker-machine's IP || 192.168.99.100 if you have trouble connecting
+const hostname = "localhost";
+
 var app         = express();
 var api         = new ParseServer({
-  serverURL         : 'http://192.168.99.100:1337/parse',
+  serverURL         : `http://${hostname}:1337/parse`,
   // Connection string URI for your MongoDB
   databaseURI       : process.env.databaseURI,
   // Path to your app’s Cloud Code
@@ -37,10 +42,27 @@ var api         = new ParseServer({
   }
 });
 
+// Initiate the shim with Client ID's and secret
+oauthshim.init([
+  {
+    name          : 'twitter',
+    // id : secret
+    client_id     : process.env.consumer_key,
+    client_secret : process.env.consumer_secret,
+    // Define the grant_url where to exchange Authorisation codes for tokens
+    grant_url     : 'https://api.twitter.com/oauth/access_token',
+    // Restrict the callback URL to a delimited list of callback paths
+    domain        : `${hostname}:8080`
+  }
+]);
+
 // Serve the Parse API at /parse URL prefix
 app.use('/parse', api);
 
+// OAuth2 shim for OAuth1 services, works with the clientside library HelloJS
+app.all('/oauthproxy', oauthshim);
+
 var port = 1337;
 app.listen(port, function() {
-  console.log(`parse-server-example running on port ${port}`);
+  console.log(`parse-server-example running on ${hostname}:${port}`);
 });

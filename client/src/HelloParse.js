@@ -64,6 +64,55 @@ const HelloParse = React.createClass({
             }
           })()}
         </div>
+        <div>
+          <button onClick={(e) => {
+            var response = hello('twitter').getAuthResponse();
+
+            if (response) {
+              // Already logged in
+              console.log(response);
+
+              // Create the authData object
+              let authData = {
+                authData: {
+                  'auth_token'        : response.oauth_token,
+                  'auth_token_secret' : response.oauth_token_secret,
+                  'id'                : response.user_id,
+                  'screen_name'       : response.screen_name
+                }
+              }
+
+              // Login the user with the twitter provider
+              Parse.User
+              .logInWith('twitter', authData)
+              .then(
+                (user) => {
+                  this.setState({ 'user': user });
+                },
+                (error) => {
+                  console.log(error);
+                }
+              );
+            } else {
+              // Login with Twitter
+              hello('twitter')
+              .login()
+              .then(
+                (result) => {
+                  return hello('twitter').api('me');
+                },
+                (error) => console.error(error)
+              )
+              .then(
+                (profile) => {
+                  console.log(profile);
+                  // Then Parse.User.logInWith
+                },
+                (error) => console.error(error)
+              );
+            }
+          }}>Twitter</button>
+        </div>
         <h3 style={{ 'cursor': 'pointer' }} onClick={() => {
           console.log(Parse.User.current());
           const gameScore = new GameScore();

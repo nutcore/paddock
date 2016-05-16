@@ -20,6 +20,11 @@ docker-compose ps
 ```
 
 ```
+## View output from containers
+docker-compose logs
+```
+
+```
 ## Get the IP address of a machine
 docker-machine ip
 ```
