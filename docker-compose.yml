@@ -28,7 +28,7 @@ services:
 
   app-client:
     container_name: "client"
-    image: mhart/alpine-node:4.4
+    image: mhart/alpine-node:6.2
     ports:
       - "8080:8080"
     env_file: .env

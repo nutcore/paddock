@@ -1,8 +1,8 @@
-FROM node:4.4
-# FROM mhart/alpine-node:4.4
+FROM node:6.2
+# FROM mhart/alpine-node:6.2
 
 # Install parse-server into a Docker Image for caching
-RUN npm install -g parse-server@2.2.9
+RUN npm install -g parse-server@2.2.10
 
 WORKDIR /src
 
