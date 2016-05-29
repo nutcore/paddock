@@ -3,13 +3,30 @@ const GameScore = Parse.Object.extend("GameScore");
 const HelloParse = React.createClass({
   getInitialState() {
     return {
-      'user'    : undefined,
+      'user'    : Parse.User.current(),
 
       'username': 'username',
       'password': 'password',
 
       'objects' : [],
     }
+  },
+
+  componentDidMount() {
+    var query = new Parse.Query(GameScore);
+
+    query.find()
+    .then(
+      function(objects) {
+        console.log("Successfully retrieved " + objects.length + " scores.");
+        this.setState({
+          'objects': objects
+        });
+      }.bind(this),
+      function(error) {
+        console.log("Error: " + error.code + " " + error.message);
+      }
+    );
   },
 
   onChange(key, event) {
@@ -29,7 +46,7 @@ const HelloParse = React.createClass({
     const { username, password } = this.state;
 
     Parse.User.signUp(username, password)
-    .then((results) => { console.log(results); })
+    .then((response) => { console.log(response); })
     .fail((error) => { console.log(error); });
   },
 
@@ -37,7 +54,13 @@ const HelloParse = React.createClass({
     const { username, password } = this.state;
 
     Parse.User.logIn(username, password)
-    .then((results) => { this.setState({ 'user': results }); })
+    .then((user) => { this.setState({ 'user': user }); })
+    .fail((error) => { console.log(error); });
+  },
+
+  onLogout() {
+    Parse.User.logOut()
+    .then(() => { this.setState({ 'user': undefined }) })
     .fail((error) => { console.log(error); });
   },
 
@@ -92,8 +115,10 @@ const HelloParse = React.createClass({
   onObjectSave() {
     const { onObjectSaveSuccess, onObjectSaveFailure } = this;
 
-    console.info("Current User", Parse.User.current());
     const gameScore = new GameScore();
+    const acl = new Parse.ACL(Parse.User.current());
+    acl.setPublicReadAccess(true);
+    gameScore.setACL(acl);
 
     gameScore.save({
       "score": chance.integer({min: 0, max: 9000}),
@@ -112,7 +137,7 @@ const HelloParse = React.createClass({
     console.info('New object created with objectId: ' + object.id);
 
     this.setState({
-      'objects': objects.concat(object.toJSON())
+      'objects': objects.concat(object)
     });
   },
 
@@ -125,12 +150,12 @@ const HelloParse = React.createClass({
   render() {
     const { user, username, password, objects } = this.state;
     const { onChange, onObjectSave } = this;
-    const { onSignup, onLogin, onSocialLogin } = this;
+    const { onSignup, onLogin, onSocialLogin, onLogout } = this;
 
     return (
       <section>
         <h1>Hello, Parse!</h1>
-        <form>
+        <div>
           <div>
             <input type="text"      placeholder="username" value={username} onChange={(e) => onChange('username', e)} />
             <input type="password"  placeholder="password" value={password} onChange={(e) => onChange('password', e)} />
@@ -142,16 +167,15 @@ const HelloParse = React.createClass({
             <input type="password"  placeholder="password" value={password} onChange={(e) => onChange('password', e)} />
             <button style={{ 'cursor': 'pointer' }} onClick={onLogin}>Login</button>
           </div>
-        </form>
+        </div>
 
         <div>
           {(() => {
             if (user) {
               return (
                 <div>
-                  Logged in as:
-                  {' '}
-                  {user.id}
+                  Logged in as: {user.id}
+                  <button style={{ 'cursor': 'pointer' }} onClick={onLogout}>Logout</button>
                 </div>
               );
             }
@@ -164,13 +188,15 @@ const HelloParse = React.createClass({
         <h3 style={{ 'cursor': 'pointer' }} onClick={onObjectSave}> &raquo; fire something up </h3>
 
         <ul>
-          {(objects).map((object) => {
+          {(objects.reverse()).map((object) => {
+            const acl = object.getACL();
             return (
-              <li key={object.objectId}>
-                <div>ID: {object.objectId}</div>
-                <div>Name: {object.playerName}</div>
-                <div>Score: {object.score}</div>
-                <div>Created at: {object.createdAt}</div>
+              <li key={object.id}>
+                <div>ID: {object.id}</div>
+                <div>Name: {object.get('playerName')}</div>
+                <div>Score: {object.get('score')}</div>
+                <div>Created at: {`${object.get('createdAt')}`}</div>
+                <div>editable: {`${acl ? acl.getWriteAccess(user) : false}`}</div>
               </li>
             );
           })}
