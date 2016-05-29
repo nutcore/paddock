@@ -190,12 +190,14 @@ const HelloParse = React.createClass({
         <ul>
           {(objects.reverse()).map((object) => {
             const acl = object.getACL();
+            const user = object.get('createdBy');
             return (
               <li key={object.id}>
                 <div>ID: {object.id}</div>
                 <div>Name: {object.get('playerName')}</div>
                 <div>Score: {object.get('score')}</div>
                 <div>Created at: {`${object.get('createdAt')}`}</div>
+                <div>Created by: {`${user ? user.id : null}`}</div>
                 <div>editable: {`${acl ? acl.getWriteAccess(user) : false}`}</div>
               </li>
             );

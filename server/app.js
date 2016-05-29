@@ -15,7 +15,7 @@ var api         = new ParseServer({
   // Connection string URI for your MongoDB
   databaseURI       : process.env.databaseURI,
   // Path to your app’s Cloud Code
-  // cloud          : './cloud/main.js',
+  cloud          : './cloud/main.js',
   // A unique identifier for your app
   appId             : process.env.appId,
   // A key that specifies a prefix used for file storage. For migrated apps, this is necessary to provide access to files already hosted on Parse.
