@@ -4,12 +4,12 @@ var express     = require('express');
 // Required globally for now, hitting Docker's image cache
 var ParseServer = require('/usr/local/lib/node_modules/parse-server').ParseServer;
 
+var path        = require('path');
 var oauthshim   = require('oauth-shim');
 
 // Check 'docker-machine ip' || 192.168.99.100 if you have trouble connecting
 const hostname  = "localhost";
 
-var app = express();
 var api = new ParseServer({
   serverURL               : `http://${hostname}:1337/parse`,
   // Connection string URI for your MongoDB
@@ -78,13 +78,18 @@ oauthshim.init([
   }
 ]);
 
+var app = express();
+
+// Serve static assets from the /public folder
+app.use('/', express.static(path.join(__dirname, '/public')));
+
 // Serve the Parse API at /parse URL prefix
-app.use('/parse', api);
+app.use(process.env.PARSE_MOUNT || '/parse', api);
 
 // OAuth2 shim for OAuth1 services, works with the clientside library HelloJS
 app.all('/oauthproxy', oauthshim);
 
-var port = 1337;
+var port = process.env.PORT || 1337;
 app.listen(port, function() {
   console.log(`parse-server-example running on ${hostname}:${port}`);
 });
