@@ -20,7 +20,8 @@ services:
     volumes:
       - ./server:/src
     working_dir: /src
-    command: npm start
+    # command: npm start
+    command: npm run dev
     links:
       - app-db
     networks:

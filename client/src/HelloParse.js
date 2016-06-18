@@ -27,7 +27,7 @@ const HelloParse = React.createClass({
       }.bind(this),
       function(error) {
         this.error("Error: " + error.code + " " + error.message);
-      }
+      }.bind(this)
     );
   },
 
@@ -108,8 +108,7 @@ const HelloParse = React.createClass({
       );
     } else {
       // Login with Twitter
-      hello('twitter')
-      .login()
+      hello('twitter').login()
       .then(
         (result) => {
           return hello('twitter').api('me');
@@ -176,7 +175,7 @@ const HelloParse = React.createClass({
   success(message) {
     this.log(message, 'success');
   },
-  
+
   error(message) {
     this.log(message, 'error');
   },
