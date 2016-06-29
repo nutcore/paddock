@@ -4,8 +4,7 @@
   "description": "",
   "scripts": {
     "prestart": "npm set progress=false; if [ ! -d node_modules ]; then npm install; fi",
-    "start": "NODE_ENV=production node app.js",
-    "dev": "NODE_ENV=development node app.js"
+    "start": "node app.js"
   },
   "author": "",
   "license": "MIT",

@@ -49,6 +49,17 @@ $ curl -X GET \
   http://192.168.99.100:1337/parse/classes/GameScore
 ```
 
-# Need a GUI?
+# Need a MongoDB GUI?
 
 [Robomongo](https://robomongo.org/)
+
+# Paddock
+Node containers will start with $NODE_ENV set in `.env`.
+
+`npm install` will be executed from the `prestart` script.
+
+## FAQ
+
+* Is this production ready?
+
+> [No](https://memegenerator.net/instance/31056298)

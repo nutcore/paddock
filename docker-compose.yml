@@ -17,11 +17,10 @@ services:
     ports:
       - "1337:1337"
     env_file: .env
+    working_dir: /src
     volumes:
       - ./server:/src
-    working_dir: /src
-    # command: npm start
-    command: npm run dev
+    command: npm start
     links:
       - app-db
     networks:
@@ -33,9 +32,9 @@ services:
     ports:
       - "8080:8080"
     env_file: .env
+    working_dir: /src
     volumes:
       - ./client:/src
-    working_dir: /src
     command: npm start
     links:
       - app-server
