@@ -2,7 +2,7 @@ version: '2'
 
 services:
   app-db:
-    container_name: "db"
+    container_name: "paddock-db"
     image: mvertes/alpine-mongo:3.2.4-1
     ports:
       - "27017:27017"
@@ -12,7 +12,7 @@ services:
       - parse-server
 
   app-server:
-    container_name: "server"
+    container_name: "paddock-server"
     build: server
     ports:
       - "1337:1337"
@@ -27,7 +27,7 @@ services:
       - parse-server
 
   app-client:
-    container_name: "client"
+    container_name: "paddock-client"
     image: mhart/alpine-node:6.2
     ports:
       - "8080:8080"

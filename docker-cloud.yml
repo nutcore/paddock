@@ -1,0 +1,28 @@
+app-db:
+  image: mvertes/alpine-mongo:3.2.4-1
+  ports:
+    - "27017:27017"
+  volumes:
+    - /var/mongo:/data/db
+
+app-server:
+  image: nutcore/paddock:2.2.17
+  ports:
+    - "1337:1337"
+  working_dir: /src
+  volumes:
+    - ./server:/src
+  command: npm start
+  links:
+    - app-db
+
+app-client:
+  image: mhart/alpine-node:6.2
+  ports:
+    - "8080:8080"
+  working_dir: /src
+  volumes:
+    - ./client:/src
+  command: npm start
+  links:
+    - app-server
