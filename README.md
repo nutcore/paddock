@@ -1,37 +1,38 @@
 # Get started with `parse-server` with `Docker`
 
-- Install [Docker Toolbox](https://www.docker.com/toolbox)
+- Install ['Docker for Mac', 'Docker for Windows' or 'Docker for Linux'](https://docs.docker.com/)
 
-- Run `Docker Quickstart Terminal`
+- Run `Docker`
+
+# Start `paddock` with `docker-compose`
 
 ```
-## Build or rebuild services
+# Build or rebuild services
 docker-compose build
 ```
 
 ```
-## Create and start containers in Detached mode: Run containers in the background
+# Create and start containers in Detached mode (-d): Run containers in the background
 docker-compose up -d
 ```
 
+## Other useful `docker-compose` commands
+
 ```
-## List containers
+# List containers
 docker-compose ps
 ```
 
 ```
-## View output from containers
+# View output from containers
 docker-compose logs
 ```
 
-```
-## Get the IP address of a machine
-docker-machine ip
-```
+# Use the `parse-server` API
 
-# From [parse-server](https://github.com/ParsePlatform/parse-server#saving-your-first-object)
->
-## Saving your first object (POST)
+## From [parse-server](https://github.com/ParsePlatform/parse-server#saving-your-first-object)
+
+> ## Saving your first object (POST)
 >
 ```bash
 curl -X POST \
@@ -40,8 +41,7 @@ curl -X POST \
   -d '{"score":1337,"playerName":"Sean Plott","cheatMode":false}' \
   http://192.168.99.100:1337/parse/classes/GameScore
 ```
->
-## Retrieving your collection (GET)
+> ## Retrieving your collection (GET)
 >
 ```bash
 $ curl -X GET \
@@ -54,9 +54,9 @@ $ curl -X GET \
 [Robomongo](https://robomongo.org/)
 
 # Paddock
-Node containers will start with $NODE_ENV set in `.env`.
+Node containers will start with `$NODE_ENV` environment variable set in `.env`.
 
-`npm install` will be executed from the `prestart` script.
+`npm install` in Docker containers will be executed from the `prestart` script.
 
 ## FAQ
 
