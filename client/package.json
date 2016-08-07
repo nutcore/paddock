@@ -1,15 +1,27 @@
 {
   "name": "client",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "private": true,
   "scripts": {
+    "build": "nwb build-react-app",
+    "clean": "nwb clean-app",
     "prestart": "npm set progress=false; if [ ! -d node_modules ]; then npm install; fi",
-    "start"   : "node ./node_modules/http-server/bin/http-server"
+    "start": "nwb serve-react-app --host 0.0.0.0 --port 8080",
+    "test": "nwb test",
+    "test:watch": "nwb test --server"
+  },
+  "dependencies": {
+    "chance": "^1.0.4",
+    "hellojs": "^1.13.4",
+    "parse": "^1.9.1",
+    "react": "^15.3.0",
+    "react-dom": "^15.3.0"
+  },
+  "devDependencies": {
+    "nwb": "0.11.x"
   },
   "author": "",
   "license": "MIT",
-  "dependencies": {
-    "http-server": "^0.9.0"
-  }
+  "repository": ""
 }

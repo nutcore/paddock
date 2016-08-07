@@ -1,6 +1,12 @@
+import React from 'react';
+
+import Parse from 'parse';
+import hello from 'hellojs';
+import { Chance } from 'chance';
+
 const GameScore = Parse.Object.extend("GameScore");
 
-const HelloParse = React.createClass({
+export default React.createClass({
   getInitialState() {
     return {
       'user'    : Parse.User.current(),
@@ -134,12 +140,12 @@ const HelloParse = React.createClass({
     gameScore.setACL(acl);
 
     gameScore.save({
-      "score": chance.integer({min: 0, max: 9000}),
-      "playerName": chance.name(),
-      "cheatMode": false,
+      'score'     : chance.integer({min: 0, max: 9000}),
+      'playerName': chance.name(),
+      'cheatMode' : false,
     }, {
-      success: onObjectSaveSuccess,
-      error: onObjectSaveFailure
+      'success'   : onObjectSaveSuccess,
+      'error'     : onObjectSaveFailure
     });
   },
 
@@ -263,8 +269,3 @@ const HelloParse = React.createClass({
   },
 
 });
-
-ReactDOM.render(
-  <HelloParse />,
-  document.getElementById('example')
-);

@@ -10,8 +10,7 @@ var ParseServer   = require('/usr/lib/node_modules/parse-server').ParseServer;
 var path          = require('path');
 var oauthshim     = require('oauth-shim');
 
-// Check 'docker-machine ip' || 192.168.99.100 if you have trouble connecting
-const hostname  = process.env.SERVER_URL || "localhost";
+const hostname  = process.env.SERVER_URL || "0.0.0.0"; // localhost
 // The default port is 1337, specify this ENV variable to use a different port
 const port      = process.env.PORT || 1337;
 
