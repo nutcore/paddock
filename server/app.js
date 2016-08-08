@@ -1,6 +1,8 @@
-require('dotenv').config();
-
 var env           = require('./config/env');
+
+if (env.is('development')) {
+  require('dotenv').config();
+}
 
 var express       = require('express');
 // Required globally for now, hitting Docker's image cache
