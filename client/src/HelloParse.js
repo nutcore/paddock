@@ -4,6 +4,13 @@ import Parse from 'parse';
 import hello from 'hellojs';
 import { Chance } from 'chance';
 
+import { Container, Message, Form, Input, Button } from 'stardust';
+
+import Signup from './Signup';
+import Signin from './Signin';
+
+import moment from 'moment';
+
 const GameScore = Parse.Object.extend("GameScore");
 
 export default React.createClass({
@@ -192,61 +199,139 @@ export default React.createClass({
     const { onSignup, onLogin, onSocialLogin, onLogout } = this;
 
     return (
-      <section className="row">
+      <section className="ui vertical stripe segment">
         <section className="col-md-6">
-          <h1>Hello, Parse!</h1>
-          <div>
-            <div>
-              <input type="text"      placeholder="username" value={username} onChange={(e) => onChange('username', e)} />
-              <input type="text"      placeholder="email"    value={email}    onChange={(e) => onChange('email', e)} />
-              <input type="password"  placeholder="password" value={password} onChange={(e) => onChange('password', e)} />
-              <button style={{ 'cursor': 'pointer' }} onClick={onSignup}>Signup</button>
+
+          <Container>
+            <div className="ui two column middle aligned very relaxed stackable grid">
+              <div className="column">
+                {(() => {
+                  if (user) return;
+                  return (
+                    <Signup
+                      username={username}
+                      email={email}
+                      password={password}
+                      onChange={onChange}
+                      onSubmit={onSignup}
+                    />
+                  );
+                })()}
+              </div>
+
+              <div className="column">
+                {(() => {
+                  if (user) return;
+                  return (
+                    <Signin
+                      username={username}
+                      email={email}
+                      password={password}
+                      onChange={onChange}
+                      onSubmit={onLogin}
+                    />
+                  );
+                })()}
+              </div>
             </div>
+          </Container>
 
-            <div>
-              <input type="text"      placeholder="username" value={username} onChange={(e) => onChange('username', e)} />
-              <input type="text"      placeholder="email"    value={email}    onChange={(e) => onChange('email', e)} />
-              <input type="password"  placeholder="password" value={password} onChange={(e) => onChange('password', e)} />
-              <button style={{ 'cursor': 'pointer' }} onClick={onLogin}>Login</button>
+          <Container>
+            <div className="ui two column middle aligned very relaxed stackable grid" style={{ 'marginBottom': '2em' }}>
+              <div className="column">
+
+                <Form className="segment">
+                  {(() => {
+                    if (user) {
+                      return (
+                        <Form.Field label={`Logged in as: ${user.id}`}>
+
+                          <Button onClick={onLogout}>
+                            <i className="sign out icon"></i>
+                            Logout
+                          </Button>
+                        </Form.Field>
+                      );
+                    }
+                  })()}
+
+                  <Form.Field label='Signin'>
+                    <Button className="twitter" onClick={onSocialLogin}>
+                      <i className="twitter icon"></i>
+                      Signin with Twitter
+                    </Button>
+                  </Form.Field>
+                </Form>
+
+              </div>
             </div>
+          </Container>
+
+          <div className="ui container center aligned" style={{ 'marginBottom': '2em' }}>
+            <button className="massive ui button" onClick={onObjectSave}>
+              <i className="fire icon"></i>
+              &raquo; fire something up
+            </button>
           </div>
 
-          <div>
-            {(() => {
-              if (user) {
-                return (
-                  <div>
-                    Logged in as: {user.id}
-                    <button style={{ 'cursor': 'pointer' }} onClick={onLogout}>Logout</button>
-                  </div>
-                );
-              }
-            })()}
-          </div>
-
-          <div>
-            <button onClick={onSocialLogin}>Twitter</button>
-          </div>
-          <h3 style={{ 'cursor': 'pointer' }} onClick={onObjectSave}> &raquo; fire something up </h3>
-
-          <ul>
-            {(objects.slice().reverse()).map((object) => {
+          <div className="ui container cards">
+            {(objects.slice().reverse()).map((object, index) => {
               const acl = object.getACL();
               const user = object.get('createdBy');
+
               return (
-                <li key={object.id}>
-                  <div>ID: {object.id}</div>
-                  <div>Name: {object.get('playerName')}</div>
-                  <div>Score: {object.get('score')}</div>
-                  <div>Created at: {`${object.get('createdAt')}`}</div>
-                  <div>Created by: {`${user ? user.id : null}`}</div>
-                  <div>editable: {`${acl ? acl.getWriteAccess(user) : false}`}</div>
-                </li>
+                <div className="card" key={object.id}>
+                  <div className="image">
+                    <img src={`http://lorempixel.com/290/290/${categories[index % 12]}`} />
+                  </div>
+                  <div className="content">
+                    <div className="header">{object.get('playerName')}</div>
+                    <div className="meta">
+                      <a>id {object.id}</a>
+                    </div>
+                    <div className="description">
+                      Created by user id {`${user ? user.id : null}`}
+                    </div>
+                  </div>
+                  <div className="extra content">
+                    <div className="ui labeled button">
+                      <div className="mini ui red button">
+                        <i className="bug icon"></i>
+                      </div>
+                      <a className="ui basic red left pointing label">
+                        {object.get('score')}
+                      </a>
+                    </div>
+
+                    <span className="right floated">
+                      {moment(object.get('createdAt')).fromNow()}
+                    </span>
+                  </div>
+                  <div className="extra content">
+                    <div className="right floated">
+                      {(() => {
+                        if (acl && acl.getWriteAccess(user)) return (
+                          <div className="ui label"><i className="edit icon"></i> editable</div>
+                        );
+                      })()}
+                    </div>
+                  </div>
+
+                </div>
               );
             })}
-          </ul>
+          </div>
         </section>
-        <section className="col-md-6">
+
+        <section style={{
+          'position'        : 'fixed',
+          'top'             : 0,
+          'right'           : 0,
+          'padding'         : '75px 20px 20px',
+          'backgroundColor' : 'rgba(0,0,0,0.1)',
+          'width'           : 360,
+          'maxWidth'        : 360,
+         }}>
           {(() => {
             if (logs.length) {
               return (
@@ -254,18 +339,35 @@ export default React.createClass({
               );
             }
           })()}
-          <ul>
-            {(logs.slice().reverse()).map((log, index) => {
-              return (
-                <li key={index}>
-                  <div>{log.level}: {JSON.stringify(log.message)}</div>
-                </li>
-              );
-            })}
-          </ul>
+          {(logs.slice().reverse()).map((log, index) => {
+            return (
+              <Message dismissable className={log.level} header={log.level} key={index}>
+                {JSON.stringify(log.message)}
+              </Message>
+            );
+
+          })}
         </section>
+
       </section>
     );
   },
 
 });
+
+const categories = [
+  'abstract',
+  'animals',
+  'business',
+  'cats',
+  'city',
+  'food',
+  // 'night',
+  // 'life',
+  'fashion',
+  'people',
+  'nature',
+  'sports',
+  'technics',
+  'transport',
+]

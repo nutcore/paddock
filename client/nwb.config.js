@@ -20,7 +20,7 @@ module.exports = function(nwb) {
             // Ignore any .babelrc files in the app or its path
             'breakConfig'     : true,
             // Cache transformations to the filesystem (in default OS temp dir)
-            ''cacheDirectory'': '/tmp/'
+            'cacheDirectory': '/tmp/'
           }
         }
       },

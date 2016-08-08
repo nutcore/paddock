@@ -6,6 +6,9 @@ import hello from 'hellojs';
 
 import App from './App';
 
+import 'stardust/node_modules/semantic-ui-css/semantic.css'
+import 'stardust/node_modules/semantic-ui-css/semantic'
+
 // Check docker-machine's IP || 192.168.99.100 if you have trouble connecting
 const hostname = window.location.hostname;
 
