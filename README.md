@@ -28,6 +28,10 @@ docker-compose ps
 docker-compose logs
 ```
 
+# Use the `paddock` interface
+
+## Open [http://localhost:8080](http://localhost:8080)
+
 # Use the `parse-server` API
 
 ## From [parse-server](https://github.com/ParsePlatform/parse-server#saving-your-first-object)
@@ -39,21 +43,21 @@ curl -X POST \
   -H "X-Parse-Application-Id: APPLICATION_ID" \
   -H "Content-Type: application/json" \
   -d '{"score":1337,"playerName":"Sean Plott","cheatMode":false}' \
-  http://192.168.99.100:1337/parse/classes/GameScore
+  http://localhost:1337/parse/classes/GameScore
 ```
 > ## Retrieving your collection (GET)
 >
 ```bash
 $ curl -X GET \
   -H "X-Parse-Application-Id: APPLICATION_ID" \
-  http://192.168.99.100:1337/parse/classes/GameScore
+  http://localhost:1337/parse/classes/GameScore
 ```
 
 # Need a MongoDB GUI?
 
 [Robomongo](https://robomongo.org/)
 
-# Paddock
+# paddock: what's going on?
 Node containers will start with `$NODE_ENV` environment variable set in `.env`.
 
 `npm install` in Docker containers will be executed from the `prestart` script.
