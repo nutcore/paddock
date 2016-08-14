@@ -10,3 +10,8 @@
 .clearfix {
     *zoom: 1;
 }
+
+/* Utils */
+.mt6 {
+    margin-top: 6em;
+}

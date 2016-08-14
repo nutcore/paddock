@@ -1,4 +1,7 @@
 import React from 'react';
+import { IndexLink, Link } from 'react-router';
+
+import { Container, Image, Icon } from 'stardust';
 
 import Parse from 'parse';
 
@@ -18,16 +21,18 @@ export default React.createClass({
     return (
       <div className="ui inverted large top fixed hidden menu">
 
-        <div className="ui container">
-          <a href="/" className="item"></a>
+        <Container>
+          <IndexLink className="item" to={`/`}>
+            <Image src="/paddock.png" style={{ 'width': 32 }} />
+          </IndexLink>
           <div className="right menu">
             {(() => {
               if (user) {
                 return (
-                  <a className="item" href="/profile">
-                    <i className="user icon"></i>
+                  <Link className="item" to={`/profile`}>
+                    <Icon name="user" />
                     Profile
-                  </a>
+                  </Link>
                 );
               }
             })()}
@@ -40,15 +45,15 @@ export default React.createClass({
               }
               return (
                 <div className="item">
-                  <a className="ui button primary" href="/login">
+                  <Link className="mini ui button primary" to={`/signin`} style={{ 'padding': '8px 14px' }}>
                     Sign in
-                  </a>
+                  </Link>
                 </div>
               );
             })()}
 
           </div>
-        </div>
+        </Container>
 
       </div>
     );

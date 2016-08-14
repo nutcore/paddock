@@ -30,7 +30,7 @@ docker-compose logs
 
 # Use the `paddock` interface
 
-## Open [http://localhost:8080](http://localhost:8080)
+## Open [http://0.0.0.0:8080/](http://0.0.0.0:8080/)
 
 # Use the `parse-server` API
 

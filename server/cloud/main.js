@@ -6,7 +6,7 @@ Parse.Cloud.beforeSave(Parse.User, function(request, response) {
   }
 });
 
-Parse.Cloud.beforeSave("GameScore", function(request, response) {
+Parse.Cloud.beforeSave("BugScore", function(request, response) {
   if (!request.user) {
     response.error("User is required");
   }
@@ -19,7 +19,12 @@ Parse.Cloud.beforeSave("GameScore", function(request, response) {
       if (!user.get("authData") && !user.get('emailVerified')) {
         response.error("You haven't verified your mail yet");
       } else {
+        var acl = new Parse.ACL(request.user);
+        acl.setPublicReadAccess(true);
+
         request.object.set("createdBy", request.user);
+        request.object.setACL(acl);
+
         response.success();
       }
     },
