@@ -1,3 +1,5 @@
+# Configuration for the Docker Cloud - Stacks Wizard
+
 app-db:
   image: mvertes/alpine-mongo:3.2.4-1
   ports:
@@ -10,8 +12,6 @@ app-server:
   ports:
     - "1337:1337"
   working_dir: /src
-  volumes:
-    - ./server:/src
   command: npm start
   links:
     - app-db
@@ -21,8 +21,6 @@ app-client:
   ports:
     - "8080:8080"
   working_dir: /src
-  volumes:
-    - ./client:/src
   command: npm start
   links:
     - app-server

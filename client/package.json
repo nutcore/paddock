@@ -4,8 +4,9 @@
   "description": "",
   "private": true,
   "scripts": {
-    "build": "nwb build-react-app",
-    "clean": "nwb clean-app",
+    "prebuild": "npm set progress=false; if [ ! -d node_modules ]; then npm install; fi",
+    "build": "nwb build-react-app src/index.js dist",
+    "clean": "nwb clean-app dist",
     "prestart": "npm set progress=false; if [ ! -d node_modules ]; then npm install; fi",
     "start": "nwb serve-react-app --fallback --host 0.0.0.0 --port 8080",
     "test": "nwb test",

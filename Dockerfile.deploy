@@ -1,0 +1,29 @@
+# parse-server installed from Docker Hub
+FROM nutcore/paddock:2.2.17
+
+ENV DIRPATH /src
+
+WORKDIR $DIRPATH
+
+COPY /server $DIRPATH
+COPY /client $DIRPATH/client
+
+WORKDIR $DIRPATH/client
+RUN mkdir -p dist
+# /client `npm install` is on prebuild
+# RUN npm install
+RUN npm run build
+
+RUN mv dist/* $DIRPATH/public/
+
+WORKDIR $DIRPATH
+# /server `npm install` is on prestart
+# RUN npm install
+
+EXPOSE 1337
+CMD [ "npm", "start" ]
+
+# Thid Docker file is built from CI
+# CLI Commands:
+# `docker build -f Dockerfile.deploy -t nutcore/paddock-app .`
+# `docker push nutcore/paddock-app:latest`

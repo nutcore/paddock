@@ -1,0 +1,17 @@
+# Configuration for a single Node Stack on Docker Cloud
+
+paddock-app:
+  command: npm start
+  environment:
+    - APP_ID=paddock
+    - DATABASE_URI=mongodb://app-db:27017/parse
+    - MASTER_KEY=MASTER_KEY
+    - consumer_key=consumer_key
+    - consumer_secret=consumer_secret
+    - mailAPIKey=mailAPIKey
+    - SERVER_URL=http://your.public-facing.server
+    - PORT=80
+  image: 'nutcore/paddock-app:latest'
+  ports:
+    - '80:80'
+  working_dir: /src

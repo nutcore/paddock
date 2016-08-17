@@ -6,27 +6,47 @@ import Parse from 'parse';
 import hello from 'hellojs';
 
 import App from './App';
-import BugsView from './Bugs/BugsView';
+import BugsView from './bugs/BugsView';
 
-import Signin from './User/Signin';
-import Signup from './User/Signup';
-import Reset from './User/Reset';
-import Profile from './User/Profile';
+import Signin from './user/Signin';
+import Signup from './user/Signup';
+import Reset from './user/Reset';
+import Profile from './user/Profile';
 
-import 'stardust/node_modules/semantic-ui-css/semantic.css'
-import 'stardust/node_modules/semantic-ui-css/semantic'
+import 'semantic-ui-css/semantic.css'
+import 'semantic-ui-css/semantic'
 
-// Check docker-machine's IP || 192.168.99.100 if you have trouble connecting
-const hostname = window.location.hostname;
+// Check `docker-machine's IP || 192.168.99.100 || 0.0.0.0` if you have trouble connecting
+let CLIENT_HOSTNAME = window.location.hostname;
+let CLIENT_PORT     = window.location.port;
+let SERVER_URL;
+let SERVER_PORT;
+let APP_ID;
+let JS_KEY;
+let TWITTER_KEY;
 
-Parse.initialize("APPLICATION_ID", "YOUR_JAVASCRIPT_KEY");
-Parse.serverURL = `//${hostname}:1337/parse`;
+if (ENV === 'production') {
+    // SERVER_PORT = 80
+    SERVER_URL  = `//${CLIENT_HOSTNAME}/parse`
+    APP_ID      = 'paddock';
+    // JS_KEY
+    TWITTER_KEY = 'iVFMEZwJEwzLWAty9jXbzHQdL';
+} else {
+    SERVER_PORT = 1337;
+    SERVER_URL  = `//${CLIENT_HOSTNAME}:${SERVER_PORT}/parse`
+    APP_ID      = 'APPLICATION_ID';
+    JS_KEY      = 'YOUR_JAVASCRIPT_KEY';
+    TWITTER_KEY = 'iVFMEZwJEwzLWAty9jXbzHQdL';
+}
+
+Parse.initialize(APP_ID, TWITTER_KEY);
+Parse.serverURL = SERVER_URL;
 
 hello.init(
-  { 'twitter' : 'iVFMEZwJEwzLWAty9jXbzHQdL' },
+  { 'twitter'     : TWITTER_KEY },
   {
-    'redirect_uri': `http://${hostname}:8080/redirect.html`,
-    'oauth_proxy' : `http://${hostname}:1337/oauthproxy`,
+    'redirect_uri': `//${CLIENT_HOSTNAME}${CLIENT_PORT ? `:${CLIENT_PORT}` : ''}/redirect.html`,
+    'oauth_proxy' : `//${CLIENT_HOSTNAME}${SERVER_PORT ? `:${SERVER_PORT}` : ''}/oauthproxy`,
   }
 );
 
@@ -40,7 +60,7 @@ render(
         <Route path="/reset"    component={Reset} />
         <Route path="/profile"  component={Profile} />
       </Route>
-      <Route path="*"         component={App} />
+      <Route path="*"           component={App} />
     </Router>
   ),
   document.querySelector('#app')
