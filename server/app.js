@@ -43,7 +43,11 @@ app.use(mount, api);
 app.all('/oauthproxy', oauthshim);
 
 // Serve static assets from the /public folder
-app.use('/', express.static(path.join(__dirname, '/public')));
+app.use('/', express.static(path.join(__dirname, 'public')));
+// Fallback for client-side routing
+app.get('*', function(req, res, next) {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 app.listen(port, function() {
   console.log(`parse-server-example running on http://${hostname}${port ? `:${port}` : ''}${mount}`);
