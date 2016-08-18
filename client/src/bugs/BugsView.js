@@ -1,11 +1,9 @@
 import React from 'react';
 import Parse from 'parse';
-import { Chance } from 'chance';
 
 const BugScore = Parse.Object.extend("BugScore");
 
-import { Container, Message, Form, Input, Button, Icon } from 'stardust';
-
+import BugsForm from './BugsForm';
 import BugsList from './BugsList';
 
 import logger from '../common/logger';
@@ -49,16 +47,14 @@ export default React.createClass({
     );
   },
 
-  onObjectSave() {
+  onObjectSave(object) {
     const { user } = this.context;
     const { onObjectSaveSuccess, onObjectSaveFailure } = this;
 
     const bugScore = new BugScore();
 
-    bugScore.save({
-      'score'     : chance.integer({ 'min': 0, 'max': 9000 }),
-      'playerName': chance.name(),
-    }, {
+    bugScore.save(
+      object, {
       // Execute any logic that should take place after the object is saved.
       'success'   : onObjectSaveSuccess,
       // Execute any logic that should take place if the save fails.
@@ -86,17 +82,9 @@ export default React.createClass({
 
     return (
       <section className="ui vertical stripe segment">
-        <section className="col-md-6">
+        <BugsForm onObjectSave={onObjectSave} />
 
-          <Container className="center aligned" style={{ 'marginBottom': '2em' }}>
-            <button className="massive ui button" onClick={onObjectSave}>
-              <Icon name="bug" />
-              bug something up
-            </button>
-          </Container>
-
-          <BugsList bugs={objects} />
-        </section>
+        <BugsList bugs={objects} />
 
         <Logs logs={logs} />
 

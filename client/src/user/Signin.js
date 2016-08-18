@@ -175,7 +175,7 @@ export default React.createClass({
         })()}
 
         <Segment>
-          <Form fields={fields} on='blur' inline onValid={onValid} onInvalid={onInvalid} onSuccess={onLogin}>
+          <Form fields={fields} on='submit' inline onValid={onValid} onInvalid={onInvalid} onSuccess={onLogin}>
             <Header.H2>
               Sign in
             </Header.H2>
@@ -197,21 +197,21 @@ export default React.createClass({
               Sign in
             </Button>
 
-            <Header.H4 className="horizontal divider">
-              <Icon name="cloud" />
-              Or with
-            </Header.H4>
-
-            <Container className="center aligned">
-
-              <Button className="twitter fluid" onClick={onSocialLogin}>
-                <Icon name="twitter" />
-                Twitter
-              </Button>
-
-            </Container>
-
           </Form>
+
+          <Header.H4 className="horizontal divider">
+            <Icon name="cloud" />
+            Or with
+          </Header.H4>
+
+          <Container className="center aligned">
+
+            <Button className="twitter fluid" onClick={onSocialLogin}>
+              <Icon name="twitter" />
+              Twitter
+            </Button>
+
+          </Container>
         </Segment>
 
         <Segment className="center aligned">

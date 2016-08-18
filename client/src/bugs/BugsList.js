@@ -9,7 +9,7 @@ export default React.createClass({
     const { bugs } = this.props;
 
     return (
-      <Container className="four cards">
+      <Container className="four doubling cards">
         {(bugs).map((bug) => {
           return (
             <BugCard bug={bug} key={bug.id} />
