@@ -5,7 +5,7 @@ module.exports = function(nwb) {
 
     'webpack': {
       'define': {
-        ENV: JSON.stringify(process.env.NODE_ENV)
+        'ENV'               : JSON.stringify(process.env.NODE_ENV)
       },
 
       'loaders': {
@@ -13,25 +13,21 @@ module.exports = function(nwb) {
         // https://github.com/insin/nwb/blob/master/src/createWebpackConfig.js#L135
         // due to default OS temp dir not working in Docker
         'babel': {
-          'test'    : /\.jsx?$/,
-          'loader'  : require.resolve('babel-loader'),
-          'exclude' : /node_modules/,
+          'test'            : /\.js$/,
+          'loader'          : require.resolve('babel-loader'),
+          'exclude'         : /node_modules/,
           'query': {
-            // Ignore any .babelrc files in the app or its path
-            'breakConfig'     : true,
+            // Don't look for .babelrc files
+            'babelrc'       : false,
             // Cache transformations to the filesystem (in default OS temp dir)
             'cacheDirectory': '/tmp/'
           }
         }
       },
 
-      // 'extra': {
-      //   'module': {
-      //     'loaders': [
-      //     ],
-      //   },
-      //
-      // },
+      'babel': {
+        'cherryPick'        : 'lodash'
+      },
 
     },
 

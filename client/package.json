@@ -1,6 +1,6 @@
 {
-  "name": "client",
-  "version": "1.0.0",
+  "name": "paddock-client",
+  "version": "0.0.1",
   "description": "",
   "private": true,
   "scripts": {
@@ -14,16 +14,20 @@
   },
   "dependencies": {
     "chance": "^1.0.4",
+    "expect": "^1.20.2",
     "hellojs": "^1.13.4",
+    "lodash": "^4.15.0",
     "moment": "^2.14.1",
     "parse": "^1.9.1",
-    "react": "^15.3.0",
-    "react-dom": "^15.3.0",
-    "react-router": "^2.6.1",
-    "stardust": "^0.29.0"
+    "react": "^15.3.1",
+    "react-dom": "^15.3.1",
+    "react-router": "^2.7.0",
+    "stardust": "^0.36.0"
   },
   "devDependencies": {
-    "nwb": "0.11.x"
+    "babel-core": "^6.13.2",
+    "babel-loader": "^6.2.5",
+    "nwb": "0.12.x"
   },
   "author": "",
   "license": "MIT",

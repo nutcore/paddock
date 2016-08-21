@@ -3,8 +3,22 @@ import React from 'react';
 import { Message } from 'stardust';
 
 export default React.createClass({
+  getInitialState() {
+    return {
+      'hidden': [],
+    };
+  },
+
+  onDismiss(index) {
+    const hidden = (this.state.hidden).concat([index]);
+    this.setState({ hidden });
+  },
+
   render() {
+    const { hidden } = this.state;
     const { logs } = this.props;
+    
+    const length = logs.length;
 
     return (
       <section style={{
@@ -17,17 +31,24 @@ export default React.createClass({
         'maxWidth'        : 360,
        }}>
         {(() => {
-          if (logs.length) {
+          if (length) {
             return (
               <h2>Logs</h2>
             );
           }
         })()}
-        {(logs.slice().reverse()).map((log, index) => {
+        {(logs.slice().reverse()).map((log, i) => {
+          const index = length - i;
+
+          if (hidden.indexOf(index) > -1) return;
           return (
-            <Message dismissable className={log.level} header={log.level} key={index}>
-              {JSON.stringify(log.message)}
-            </Message>
+            <Message
+              key={index}
+              className={log.level}
+              header={log.level}
+              content={JSON.stringify(log.message + ' ' + index)}
+              onDismiss={() => this.onDismiss(index)}
+            />
           );
 
         })}
