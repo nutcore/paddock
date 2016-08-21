@@ -39,7 +39,7 @@ if (ENV === 'production') {
     TWITTER_KEY = 'iVFMEZwJEwzLWAty9jXbzHQdL';
 }
 
-Parse.initialize(APP_ID, TWITTER_KEY);
+Parse.initialize(APP_ID, JS_KEY);
 Parse.serverURL = SERVER_URL;
 
 hello.init(
