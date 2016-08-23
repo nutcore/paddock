@@ -48,7 +48,7 @@ To get started with `paddock` you're only going to need `Docker` installed:
 
 In order to start the `parse-server` with `Docker` open your terminal and run `docker-compose`:
 
-```
+```bash
 # Create and start containers (get easy access to the logs)
 docker-compose up
 
