@@ -4,8 +4,6 @@ Up and Running development environment built with `parse-server` and `docker`.
 ## TL;DR
 Install [`Docker`](#install) and run [`docker-compose`](#start), wait for some magic to happen (requires internet) and check [0.0.0.0:8080](http://0.0.0.0:8080/).
 
-**Full disclosure**: *the cake is a lie*, with the default configuration you're going to need two [API keys](#configuration).
-
 **Spoiler Alert**: the demo is at [paddock.tech](http://paddock.tech/).
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
@@ -94,7 +92,7 @@ Need a GUI? Check [Robomongo](https://robomongo.org/)
 ## Configuration
 
 `paddock` comes bundled with some of the main features from `parse-server`.
-By default we enabled email verification and oauth login (with Twitter, so far) in `server/config/parse.js`.
+By default we enabled oauth login (with Twitter, so far) in `server/config/parse.js`. Email verification is optional.
 Both these features need API keys (if you want to keep them).
 
 ### Mailgun (email verification)

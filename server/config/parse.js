@@ -70,14 +70,14 @@ module.exports = function(params, env) {
     },
 
     // Enable email verification
-    'verifyUserEmails'        : true,
+    'verifyUserEmails'        : process.env.mailAPIKey !== 'DISABLED',
     // The public URL of your app.
     // This will appear in the link that is used to verify email addresses and reset passwords.
     // Set the mount path as it is in serverURL
     'publicServerURL'         : `http://${hostname}${port ? `:${port}` : ''}${mount}`,
 
     // Your apps name. This will appear in the subject and body of the emails that are sent.
-    'appName'                 : 'Parse App',
+    'appName'                 : 'Paddock - Parse App',
 
     // The email adapter
     'emailAdapter': {
