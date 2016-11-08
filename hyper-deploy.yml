@@ -1,0 +1,23 @@
+# Configuration for a single Node on Hyper
+
+version: '2'
+
+services:
+  paddock-app:
+    fip: 147.75.99.77
+    command: npm start
+    environment:
+      - APP_ID=APP_ID
+      - MASTER_KEY=MASTER_KEY
+      - SERVER_URL=your.public-facing.server
+      - PORT=80
+      - DATABASE_URI=mongodb://app-db:27017/parse
+      - consumer_key=consumer_key
+      - consumer_secret=consumer_secret
+      - mailAPIKey=mailAPIKey
+      - mailDomain=yourmaildomain.com
+      - mailFrom=from@yourmaildomain.com
+    image: 'nutcore/paddock-app:latest'
+    ports:
+      - '80:80'
+    working_dir: /src

@@ -27,13 +27,13 @@ let TWITTER_KEY;
 
 if (ENV === 'production') {
     // SERVER_PORT = 80
-    SERVER_URL  = `//${CLIENT_HOSTNAME}/parse`
+    SERVER_URL  = `//${CLIENT_HOSTNAME}/parse`;
     APP_ID      = 'paddock';
     // JS_KEY
     TWITTER_KEY = 'iVFMEZwJEwzLWAty9jXbzHQdL';
 } else {
     SERVER_PORT = 1337;
-    SERVER_URL  = `//${CLIENT_HOSTNAME}:${SERVER_PORT}/parse`
+    SERVER_URL  = `//${CLIENT_HOSTNAME}:${SERVER_PORT}/parse`;
     APP_ID      = 'APPLICATION_ID';
     JS_KEY      = 'YOUR_JAVASCRIPT_KEY';
     TWITTER_KEY = 'iVFMEZwJEwzLWAty9jXbzHQdL';

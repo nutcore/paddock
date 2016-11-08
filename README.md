@@ -132,8 +132,11 @@ Current deploy strategy is based onto a `Dockerfile`: `Dockerfile.deploy`.
 `paddock` itself is built and deployed with Docker Cloud, based onto the `Dockerfile.deploy` configuration.
 
 ## HYPER_
-(TBD)
 https://www.hyper.sh/
+
+`hyper compose up --file=hyper-deploy.yml -d`
+
+(TBD)
 
 ## now
 (TBD)
